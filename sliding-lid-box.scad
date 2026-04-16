@@ -151,13 +151,14 @@ module cubeRoundZCorners(
   }
 }
 
+
 module cubeRoundZCornersLatch(
   width,
   length,
   thikness,
   cornerRadius,
   corners,
-  latches
+  latchPeriod
 ) {
 
   cubeRoundZCorners(width, length, thikness, cornerRadius, corners);
@@ -166,9 +167,10 @@ module cubeRoundZCornersLatch(
 
   eps = 0.0;
 
-  delta = width / (latches + 1);
-
-  for (sphereIndex = [0:1:latches - 1]) {
+  delta = latchPeriod;
+  
+  
+  for (sphereIndex = [0:1:width/delta - 1]) {
 
     translate([delta + sphereIndex * delta, eps, thikness / 2]) {
       sphere(r=sphereRadius);
@@ -178,6 +180,20 @@ module cubeRoundZCornersLatch(
       sphere(r=sphereRadius);
     }
   }
+  
+  for (sphereIndex = [0:1:length/delta - 1]) {
+
+    translate([eps, delta + sphereIndex * delta,  thikness / 2]) {
+      sphere(r=sphereRadius);
+    }
+
+    translate([width-eps, delta + sphereIndex * delta,  thikness / 2]) {
+      sphere(r=sphereRadius);
+    }
+  }
+  
+  
+  
 }
 
 module frameRound2Corners(width, length, thikness, cornerRadius, frameWidth) {
@@ -251,8 +267,8 @@ module box(width, height, length, cornerRadius, thikness) {
 }
 
 module main() {
-  width = 42 * 2;
-  length = 42 * 5;
+  width = 42 * 5;
+  length = 42 * 2;
   height = 6 * 7;
   thikness = 4;
 
@@ -295,7 +311,7 @@ module main() {
         thikness=glassFrameThikness,
         cornerRadius=cornerRadius,
         corners=[1, 1, 1, 1],
-        latches=width / 10
+        latchPeriod=10
       );
       lidGlassFrameCut(glassFrameThikness);
     }
