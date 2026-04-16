@@ -268,8 +268,8 @@ module box(width, height, length, cornerRadius, thikness) {
 
 
 module main(){
-    width = 42*3;
-    length = 42*4;
+    width = 42*5;
+    length = 42*2;
     height = 6*7;
     thikness = 4;
 
@@ -379,7 +379,7 @@ module main(){
     translate([width+10,0, 0])     
        lid();
 
-    translate([width+10, -boxLidLength, -glassThikness]) {
+    translate([width+boxLidWidth+20, 0, -glassThikness]) {
         difference() {  
             lidGlassFrame();
 
